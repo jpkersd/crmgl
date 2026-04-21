@@ -4,6 +4,8 @@ import { Search, Plus, Bell } from 'lucide-react';
 
 export function Header({ activeTab, onNewLead }: { activeTab: string; onNewLead: () => void }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const { operations, selectedOperationId } = useOperation();
+  const selectedOp = operations.find((o) => o.id === selectedOperationId);
 
   const getTabTitle = () => {
     switch (activeTab) {
@@ -27,7 +29,7 @@ export function Header({ activeTab, onNewLead }: { activeTab: string; onNewLead:
         gap: 20,
       }}
     >
-      <div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <h1 style={{
           fontSize: 20,
           fontWeight: 600,
@@ -37,6 +39,25 @@ export function Header({ activeTab, onNewLead }: { activeTab: string; onNewLead:
         }}>
           {getTabTitle()}
         </h1>
+        {selectedOp && selectedOperationId !== 'all' && (
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              padding: '4px 10px',
+              borderRadius: 8,
+              fontSize: 12,
+              fontWeight: 700,
+              background: `${selectedOp.color}15`,
+              color: selectedOp.color,
+              border: `1px solid ${selectedOp.color}30`,
+              fontFamily: "'Manrope', sans-serif",
+            }}
+          >
+            {selectedOp.icon} {selectedOp.name}
+          </span>
+        )}
       </div>
 
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, maxWidth: 400 }}>
