@@ -84,7 +84,82 @@ function AppContent() {
   );
 }
 
+function Login({ onLogin }: { onLogin: () => void }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === '7808') {
+      onLogin();
+    } else {
+      setError('Senha incorreta');
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', height: '100dvh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
+      <form onSubmit={handleSubmit} style={{ background: 'var(--bg-secondary)', padding: 32, borderRadius: 16, border: '1px solid var(--border-subtle)', width: 320, display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <h2 style={{ textAlign: 'center', fontSize: 24, fontWeight: 'bold', color: 'white' }}>CrmGL</h2>
+        <p style={{ textAlign: 'center', fontSize: 14, color: 'var(--text-muted)', marginTop: -10 }}>Acesso Restrito</p>
+        
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+          <label style={{ fontSize: 14, color: 'var(--text-muted)' }}>Senha de Acesso</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ 
+              padding: '12px 14px', 
+              borderRadius: 8, 
+              border: '1px solid var(--border-subtle)', 
+              background: 'var(--bg-tertiary)', 
+              color: 'white',
+              fontSize: 16,
+              outline: 'none'
+            }}
+            placeholder="••••"
+            autoFocus
+          />
+        </div>
+        
+        {error && <p style={{ color: '#ef4444', fontSize: 14, textAlign: 'center' }}>{error}</p>}
+        
+        <button 
+          type="submit" 
+          style={{ 
+            padding: '12px', 
+            borderRadius: 8, 
+            fontWeight: 'bold', 
+            background: '#6366f1', 
+            color: 'white', 
+            border: 'none', 
+            cursor: 'pointer',
+            marginTop: 8,
+            fontSize: 16
+          }}
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
+  );
+}
+
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('auth_crmgl') === 'true';
+  });
+
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    localStorage.setItem('auth_crmgl', 'true');
+  };
+
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   return (
     <OperationProvider>
       <AppContent />
