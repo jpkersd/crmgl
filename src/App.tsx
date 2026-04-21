@@ -24,12 +24,12 @@ function MobileOperationSelector() {
         gap: 8,
       }}
     >
-      <Layers size={14} style={{ color: 'var(--text-muted)' }} />
+      <Layers size={16} style={{ color: 'var(--text-secondary)' }} />
       <select
         className="select-dark"
         value={selectedOperationId}
         onChange={(e) => setSelectedOperationId(e.target.value)}
-        style={{ fontSize: 12, padding: '7px 10px', flex: 1 }}
+        style={{ fontSize: 13, padding: '7px 10px', flex: 1 }}
       >
         <option value="all">🌐 Todas as Operações</option>
         {operations.map((op) => (
@@ -64,10 +64,10 @@ function AppContent() {
           style={{
             flex: 1,
             overflowY: 'auto',
-            padding: '20px',
+            padding: '24px',
             paddingBottom: '100px',
           }}
-          className="md:p-6"
+          className="md:p-8"
         >
           <div style={{ maxWidth: 1400, margin: '0 auto' }}>
             {activeTab === 'dashboard' && <Dashboard />}
@@ -98,46 +98,47 @@ function Login({ onLogin }: { onLogin: () => void }) {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100dvh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
-      <form onSubmit={handleSubmit} style={{ background: 'var(--bg-secondary)', padding: 32, borderRadius: 16, border: '1px solid var(--border-subtle)', width: 320, display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <h2 style={{ textAlign: 'center', fontSize: 24, fontWeight: 'bold', color: 'white' }}>CrmGL</h2>
-        <p style={{ textAlign: 'center', fontSize: 14, color: 'var(--text-muted)', marginTop: -10 }}>Acesso Restrito</p>
+    <div style={{ 
+      display: 'flex', 
+      height: '100dvh', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      background: 'var(--bg-primary)'
+    }}>
+      <form onSubmit={handleSubmit} style={{ 
+        background: 'var(--bg-secondary)', 
+        padding: 32, 
+        borderRadius: 12, 
+        border: '1px solid var(--border-subtle)',
+        width: 340,
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: 20,
+        boxShadow: 'var(--shadow-md)'
+      }}>
+        <div>
+          <h1 style={{ textAlign: 'center', fontSize: 28, fontWeight: 700, color: 'var(--text-primary)', fontFamily: "'Manrope', sans-serif" }}>CrmGL</h1>
+          <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--text-secondary)', marginTop: 8 }}>Acesso Restrito</p>
+        </div>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
-          <label style={{ fontSize: 14, color: 'var(--text-muted)' }}>Senha de Acesso</label>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <label style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Senha de Acesso</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ 
-              padding: '12px 14px', 
-              borderRadius: 8, 
-              border: '1px solid var(--border-subtle)', 
-              background: 'var(--bg-tertiary)', 
-              color: 'white',
-              fontSize: 16,
-              outline: 'none'
-            }}
+            className="input-dark"
             placeholder="••••"
             autoFocus
           />
         </div>
         
-        {error && <p style={{ color: '#ef4444', fontSize: 14, textAlign: 'center' }}>{error}</p>}
+        {error && <p style={{ color: 'var(--color-danger)', fontSize: 13, textAlign: 'center', fontWeight: 500 }}>{error}</p>}
         
         <button 
           type="submit" 
-          style={{ 
-            padding: '12px', 
-            borderRadius: 8, 
-            fontWeight: 'bold', 
-            background: '#6366f1', 
-            color: 'white', 
-            border: 'none', 
-            cursor: 'pointer',
-            marginTop: 8,
-            fontSize: 16
-          }}
+          className="btn-primary"
+          style={{ marginTop: 8, width: '100%', justifyContent: 'center' }}
         >
           Entrar
         </button>

@@ -56,9 +56,8 @@ export function Dashboard() {
       .reduce((s, r) => s + r.amount, 0);
     return { name: op.name, value: selectedOperationId === 'all' ? opRevenue : 0, color: op.color, icon: op.icon };
   });
-  // Only show pie when viewing all operations
+  
   const showPie = selectedOperationId === 'all';
-  // Recalculate for "all" view
   const pieDataAll = operations.map((op) => {
     const opRevenue = filteredRevenue
       .filter((r) => r.operationId === op.id)
@@ -72,10 +71,8 @@ export function Dashboard() {
       label: 'Faturamento',
       value: formatCurrency(totalRevenue),
       icon: DollarSign,
-      glow: 'glow-emerald',
-      color: 'var(--accent-emerald)',
-      bgColor: 'rgba(16, 185, 129, 0.08)',
-      borderColor: 'rgba(16, 185, 129, 0.15)',
+      color: '#10B981',
+      bgColor: 'var(--color-success-light)',
       trend: '+12.5%',
       trendUp: true,
     },
@@ -83,10 +80,8 @@ export function Dashboard() {
       label: 'Gasto Meta Ads',
       value: formatCurrency(totalAdSpend),
       icon: Target,
-      glow: 'glow-rose',
-      color: 'var(--accent-rose)',
-      bgColor: 'rgba(244, 63, 94, 0.08)',
-      borderColor: 'rgba(244, 63, 94, 0.15)',
+      color: '#E11D48',
+      bgColor: 'var(--color-danger-light)',
       trend: '+8.2%',
       trendUp: true,
     },
@@ -94,10 +89,8 @@ export function Dashboard() {
       label: 'ROI Real',
       value: `${roi.toFixed(1)}%`,
       icon: TrendingUp,
-      glow: 'glow-cyan',
-      color: 'var(--accent-cyan)',
-      bgColor: 'rgba(6, 182, 212, 0.08)',
-      borderColor: 'rgba(6, 182, 212, 0.15)',
+      color: '#0891B2',
+      bgColor: 'var(--color-info-light)',
       trend: roi > 100 ? 'Excelente' : roi > 50 ? 'Bom' : 'Atenção',
       trendUp: roi > 50,
     },
@@ -105,10 +98,8 @@ export function Dashboard() {
       label: 'Lucro Líquido',
       value: formatCurrency(netProfit),
       icon: Gem,
-      glow: 'glow-violet',
-      color: 'var(--accent-violet)',
-      bgColor: 'rgba(139, 92, 246, 0.08)',
-      borderColor: 'rgba(139, 92, 246, 0.15)',
+      color: '#1560BD',
+      bgColor: 'var(--color-primary-light)',
       trend: netProfit > 0 ? '+Positivo' : 'Negativo',
       trendUp: netProfit > 0,
     },
@@ -119,14 +110,15 @@ export function Dashboard() {
     return (
       <div
         style={{
-          background: 'rgba(255,255,255,0.97)',
+          background: 'var(--bg-secondary)',
           border: '1px solid var(--border-default)',
-          borderRadius: 12,
-          padding: '12px 16px',
+          borderRadius: 8,
+          padding: '10px 14px',
           boxShadow: 'var(--shadow-md)',
+          fontFamily: "'Source Sans 3', sans-serif",
         }}
       >
-        <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 8 }}>{label}</p>
+        <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6 }}>{label}</p>
         {payload.map((p: any, i: number) => (
           <p key={i} style={{ fontSize: 12, fontWeight: 600, color: p.color, marginBottom: 2 }}>
             {p.name}: {formatCompact(p.value)}
@@ -137,61 +129,48 @@ export function Dashboard() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-      {/* KPI Cards */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      {/* KPI Cards Grid */}
       <div
         className="stagger-children"
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
           gap: 16,
         }}
       >
         {kpis.map((kpi, i) => (
           <div
             key={i}
-            className={`glass-card ${kpi.glow} animate-fade-in-up`}
-            style={{ padding: 20, position: 'relative', overflow: 'hidden' }}
+            className="kpi-card animate-fade-in-up"
+            style={{ '--kpi-accent': kpi.color } as React.CSSProperties}
           >
-            {/* Background glow */}
-            <div
-              style={{
-                position: 'absolute',
-                top: -20,
-                right: -20,
-                width: 80,
-                height: 80,
-                borderRadius: '50%',
-                background: kpi.bgColor,
-                filter: 'blur(30px)',
-              }}
-            />
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 14, position: 'relative' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16 }}>
               <div
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: 44,
+                  height: 44,
                   borderRadius: 10,
                   background: kpi.bgColor,
-                  border: `1px solid ${kpi.borderColor}`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <kpi.icon size={18} style={{ color: kpi.color }} />
+                <kpi.icon size={20} style={{ color: kpi.color }} />
               </div>
               <span
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 3,
+                  gap: 4,
                   fontSize: 11,
                   fontWeight: 600,
-                  color: kpi.trendUp ? 'var(--accent-emerald)' : 'var(--accent-rose)',
-                  background: kpi.trendUp ? 'rgba(16,185,129,0.1)' : 'rgba(244,63,94,0.1)',
-                  padding: '3px 8px',
+                  color: kpi.trendUp ? '#10B981' : '#E11D48',
+                  background: kpi.trendUp ? 'rgba(16,185,129,0.1)' : 'rgba(225,29,72,0.1)',
+                  padding: '4px 10px',
                   borderRadius: 6,
+                  fontFamily: "'Manrope', sans-serif",
                 }}
               >
                 {kpi.trendUp ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
@@ -199,19 +178,18 @@ export function Dashboard() {
               </span>
             </div>
             <p
-              className="animate-count-up"
               style={{
-                fontSize: 26,
-                fontWeight: 800,
+                fontSize: 28,
+                fontWeight: 700,
                 color: 'var(--text-primary)',
-                letterSpacing: '-0.02em',
-                marginBottom: 4,
-                position: 'relative',
+                letterSpacing: '-0.01em',
+                marginBottom: 6,
+                fontFamily: "'Manrope', sans-serif",
               }}
             >
               {kpi.value}
             </p>
-            <p style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>{kpi.label}</p>
+            <p style={{ fontSize: 12, color: 'var(--text-secondary)', fontWeight: 500 }}>{kpi.label}</p>
           </div>
         ))}
       </div>
@@ -221,36 +199,47 @@ export function Dashboard() {
         style={{
           display: 'grid',
           gridTemplateColumns: showPie ? '1fr 380px' : '1fr',
-          gap: 16,
+          gap: 20,
         }}
         className="chart-grid"
       >
         {/* Area Chart */}
         <div className="glass-card animate-fade-in-up" style={{ padding: 24 }}>
-          <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>Escala de Gastos vs Retorno</h3>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 20 }}>Últimos 14 dias</p>
+          <div style={{ marginBottom: 20 }}>
+            <h3 style={{
+              fontSize: 16,
+              fontWeight: 600,
+              color: 'var(--text-primary)',
+              margin: 0,
+              marginBottom: 4,
+              fontFamily: "'Manrope', sans-serif",
+            }}>
+              Escala de Gastos vs Retorno
+            </h3>
+            <p style={{ fontSize: 12, color: 'var(--text-secondary)', margin: 0 }}>Últimos 14 dias</p>
+          </div>
           <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={areaData} margin={{ top: 5, right: 5, left: -10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="gradRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#10B981" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#10B981" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="gradAdSpend" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#f43f5e" stopOpacity={0.3} />
-                    <stop offset="100%" stopColor="#f43f5e" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#E11D48" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#E11D48" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" />
-                <XAxis dataKey="date" tick={{ fill: '#6b7280', fontSize: 10 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: '#6b7280', fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
+                <XAxis dataKey="date" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'var(--text-muted)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${(v/1000).toFixed(0)}k`} />
                 <Tooltip content={<CustomTooltip />} />
                 <Area
                   type="monotone"
                   dataKey="revenue"
                   name="Faturamento"
-                  stroke="#10b981"
+                  stroke="#10B981"
                   strokeWidth={2}
                   fill="url(#gradRevenue)"
                 />
@@ -258,7 +247,7 @@ export function Dashboard() {
                   type="monotone"
                   dataKey="adSpend"
                   name="Gasto Ads"
-                  stroke="#f43f5e"
+                  stroke="#E11D48"
                   strokeWidth={2}
                   fill="url(#gradAdSpend)"
                 />
@@ -267,11 +256,22 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* Pie Chart — only in "all" view */}
+        {/* Pie Chart */}
         {showPie && (
           <div className="glass-card animate-fade-in-up" style={{ padding: 24 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 4 }}>Distribuição por Operação</h3>
-            <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 20 }}>Faturamento total</p>
+            <div style={{ marginBottom: 20 }}>
+              <h3 style={{
+                fontSize: 16,
+                fontWeight: 600,
+                color: 'var(--text-primary)',
+                margin: 0,
+                marginBottom: 4,
+                fontFamily: "'Manrope', sans-serif",
+              }}>
+                Distribuição por Operação
+              </h3>
+              <p style={{ fontSize: 12, color: 'var(--text-secondary)', margin: 0 }}>Faturamento total</p>
+            </div>
             <div style={{ width: '100%', height: 260 }}>
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -293,9 +293,9 @@ export function Dashboard() {
                   <Tooltip
                     formatter={(value: number) => formatCurrency(value)}
                     contentStyle={{
-                      background: 'rgba(255,255,255,0.97)',
+                      background: 'var(--bg-secondary)',
                       border: '1px solid var(--border-default)',
-                      borderRadius: 12,
+                      borderRadius: 8,
                       fontSize: 12,
                       boxShadow: 'var(--shadow-md)',
                     }}
@@ -304,7 +304,7 @@ export function Dashboard() {
               </ResponsiveContainer>
             </div>
             {/* Legend */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 8 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 12 }}>
               {pieDataAll.map((entry, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -321,35 +321,35 @@ export function Dashboard() {
         )}
       </div>
 
-      {/* Summary cards */}
+      {/* Summary Cards */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: 16,
         }}
       >
         <div className="glass-card" style={{ padding: 20 }}>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Taxas Antigas (Plataforma)</p>
-          <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--accent-amber)' }}>{formatCurrency(totalPlatformFees)}</p>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>Histórico</p>
+          <p style={{ fontSize: 10, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Taxas Antigas</p>
+          <p style={{ fontSize: 22, fontWeight: 700, color: '#D97706', fontFamily: "'Manrope', sans-serif", marginBottom: 4 }}>{formatCurrency(totalPlatformFees)}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>Histórico</p>
         </div>
         <div className="glass-card" style={{ padding: 20 }}>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Taxas de Gateway</p>
-          <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--accent-violet)' }}>{formatCurrency(totalGateway)}</p>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>~{totalRevenue > 0 ? ((totalGateway / totalRevenue) * 100).toFixed(1) : 0}% do faturamento</p>
+          <p style={{ fontSize: 10, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Taxas de Gateway</p>
+          <p style={{ fontSize: 22, fontWeight: 700, color: '#1560BD', fontFamily: "'Manrope', sans-serif", marginBottom: 4 }}>{formatCurrency(totalGateway)}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>~{totalRevenue > 0 ? ((totalGateway / totalRevenue) * 100).toFixed(1) : 0}% do faturamento</p>
         </div>
         <div className="glass-card" style={{ padding: 20 }}>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Custos Operacionais</p>
-          <p style={{ fontSize: 20, fontWeight: 700, color: 'var(--accent-rose)' }}>{formatCurrency(totalOperational)}</p>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>Ferramentas + Suporte</p>
+          <p style={{ fontSize: 10, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Custos Operacionais</p>
+          <p style={{ fontSize: 22, fontWeight: 700, color: '#E11D48', fontFamily: "'Manrope', sans-serif", marginBottom: 4 }}>{formatCurrency(totalOperational)}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>Ferramentas + Suporte</p>
         </div>
         <div className="glass-card" style={{ padding: 20 }}>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Margem Líquida</p>
-          <p style={{ fontSize: 20, fontWeight: 700, color: netProfit > 0 ? 'var(--accent-emerald)' : 'var(--accent-rose)' }}>
+          <p style={{ fontSize: 10, color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Margem Líquida</p>
+          <p style={{ fontSize: 22, fontWeight: 700, color: netProfit > 0 ? '#10B981' : '#E11D48', fontFamily: "'Manrope', sans-serif", marginBottom: 4 }}>
             {totalRevenue > 0 ? ((netProfit / totalRevenue) * 100).toFixed(1) : 0}%
           </p>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>Após todos os custos</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>Após todos os custos</p>
         </div>
       </div>
     </div>

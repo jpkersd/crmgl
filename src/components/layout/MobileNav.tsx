@@ -21,16 +21,16 @@ export function MobileNav({ activeTab, setActiveTab }: MobileNavProps) {
         bottom: 0,
         left: 0,
         right: 0,
-        background: 'rgba(255, 255, 255, 0.95)',
+        background: 'var(--bg-secondary)',
         backdropFilter: 'blur(20px)',
         borderTop: '1px solid var(--border-subtle)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingTop: 10,
+        paddingTop: 12,
         paddingBottom: 'max(env(safe-area-inset-bottom), 12px)',
         zIndex: 100,
-        boxShadow: '0 -4px 20px rgba(0,0,0,0.06)',
+        boxShadow: 'var(--shadow-md)',
       }}
     >
       {items.map((item) => {
@@ -47,22 +47,33 @@ export function MobileNav({ activeTab, setActiveTab }: MobileNavProps) {
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              color: isActive ? '#6366f1' : 'var(--text-muted)',
+              color: isActive ? 'var(--color-primary)' : 'var(--text-secondary)',
               transition: 'all 0.2s ease',
               transform: isActive ? 'scale(1.05)' : 'scale(1)',
               flex: 1,
+              padding: '4px 0',
+            }}
+            onMouseEnter={(e) => {
+              if (!isActive) {
+                e.currentTarget.style.color = 'var(--text-primary)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isActive) {
+                e.currentTarget.style.color = 'var(--text-secondary)';
+              }
             }}
           >
             <div
               style={{
-                padding: 4,
+                padding: 6,
                 borderRadius: 8,
-                background: isActive ? 'rgba(99,102,241,0.08)' : 'transparent',
+                background: isActive ? 'var(--color-primary-light)' : 'transparent',
               }}
             >
               <item.icon size={20} strokeWidth={isActive ? 2.5 : 2} />
             </div>
-            <span style={{ fontSize: 10, fontWeight: 700 }}>{item.label}</span>
+            <span style={{ fontSize: 10, fontWeight: 700, fontFamily: "'Manrope', sans-serif" }}>{item.label}</span>
           </button>
         );
       })}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useOperation } from '../context/OperationContext';
-import { Plus, Trash2, Download, Filter, Receipt, TrendingDown } from 'lucide-react';
+import { Plus, Trash2, Download, Filter, TrendingDown, Receipt } from 'lucide-react';
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
@@ -67,47 +67,48 @@ export function Financeiro() {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
       {/* Summary Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
-        <div className="glass-card glow-rose animate-fade-in-up" style={{ padding: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 9, background: 'rgba(244,63,94,0.08)', border: '1px solid rgba(244,63,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingDown size={16} style={{ color: 'var(--accent-rose)' }} />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
+        <div className="kpi-card animate-fade-in-up" style={{ '--kpi-accent': '#E11D48' } as React.CSSProperties}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 10, background: 'var(--color-danger-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <TrendingDown size={20} style={{ color: '#E11D48' }} />
             </div>
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Gasto Meta Ads</span>
           </div>
-          <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--accent-rose)' }}>{formatCurrency(totalAds)}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Gasto Meta Ads</p>
+          <p style={{ fontSize: 26, fontWeight: 700, color: '#E11D48', fontFamily: "'Manrope', sans-serif" }}>{formatCurrency(totalAds)}</p>
         </div>
-        <div className="glass-card glow-amber animate-fade-in-up" style={{ padding: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-            <div style={{ width: 36, height: 36, borderRadius: 9, background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Receipt size={16} style={{ color: 'var(--accent-amber)' }} />
+        <div className="kpi-card animate-fade-in-up" style={{ '--kpi-accent': '#D97706' } as React.CSSProperties}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 10, background: 'var(--color-warning-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Receipt size={20} style={{ color: '#D97706' }} />
             </div>
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Custos Operacionais</span>
           </div>
-          <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--accent-amber)' }}>{formatCurrency(totalOps)}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Custos Operacionais</p>
+          <p style={{ fontSize: 26, fontWeight: 700, color: '#D97706', fontFamily: "'Manrope', sans-serif" }}>{formatCurrency(totalOps)}</p>
         </div>
-        <div className="glass-card animate-fade-in-up" style={{ padding: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total Despesas</span>
+        <div className="kpi-card animate-fade-in-up" style={{ '--kpi-accent': '#1560BD' } as React.CSSProperties}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+            <div style={{ width: 44, height: 44, borderRadius: 10, background: 'var(--color-primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Filter size={20} style={{ color: '#1560BD' }} />
+            </div>
           </div>
-          <p style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)' }}>{formatCurrency(totalAds + totalOps + totalGateway)}</p>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 4 }}>
-            Inclui {formatCurrency(totalGateway)} de Gateway
-          </p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Total Despesas</p>
+          <p style={{ fontSize: 26, fontWeight: 700, color: '#1560BD', fontFamily: "'Manrope', sans-serif" }}>{formatCurrency(totalAds + totalOps + totalGateway)}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 6 }}>Inclui {formatCurrency(totalGateway)} de Gateway</p>
         </div>
       </div>
 
       {/* Actions Bar */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Filter size={14} style={{ color: 'var(--text-muted)' }} />
+          <Filter size={16} style={{ color: 'var(--text-secondary)' }} />
           <select
             className="select-dark"
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as any)}
-            style={{ width: 160, fontSize: 12, padding: '8px 12px' }}
+            style={{ width: 160, fontSize: 13, padding: '10px 12px' }}
           >
             <option value="all">Todos os tipos</option>
             <option value="meta_ads">Meta Ads</option>
@@ -122,7 +123,7 @@ export function Financeiro() {
               setSortField(f as any);
               setSortDir(d as any);
             }}
-            style={{ width: 160, fontSize: 12, padding: '8px 12px' }}
+            style={{ width: 160, fontSize: 13, padding: '10px 12px' }}
           >
             <option value="date-desc">Data (recente)</option>
             <option value="date-asc">Data (antigo)</option>
@@ -135,11 +136,11 @@ export function Financeiro() {
             Config. Gateway
           </button>
           <button className="btn-secondary" onClick={exportCSV}>
-            <Download size={14} />
+            <Download size={16} />
             Exportar
           </button>
           <button className="btn-primary" onClick={() => setShowForm(true)}>
-            <Plus size={15} strokeWidth={2.5} />
+            <Plus size={16} strokeWidth={2.5} />
             Novo Gasto
           </button>
         </div>
@@ -147,40 +148,40 @@ export function Financeiro() {
 
       {/* Add Expense Form */}
       {showForm && (
-        <div className="glass-card animate-fade-in-up" style={{ padding: 20 }}>
-          <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 16 }}>Lançar Despesa</h3>
-          <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, alignItems: 'end' }}>
+        <div className="glass-card animate-fade-in-up" style={{ padding: 24 }}>
+          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, fontFamily: "'Manrope', sans-serif" }}>Lançar Despesa</h3>
+          <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, alignItems: 'end' }}>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Operação</label>
-              <select className="select-dark" value={form.operationId} onChange={(e) => setForm({ ...form, operationId: e.target.value })} style={{ fontSize: 12 }}>
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Operação</label>
+              <select className="select-dark" value={form.operationId} onChange={(e) => setForm({ ...form, operationId: e.target.value })} style={{ fontSize: 13 }}>
                 {operations.map((op) => (
                   <option key={op.id} value={op.id}>{op.icon} {op.name}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tipo</label>
-              <select className="select-dark" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as any })} style={{ fontSize: 12 }}>
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Tipo</label>
+              <select className="select-dark" value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as any })} style={{ fontSize: 13 }}>
                 <option value="meta_ads">Meta Ads</option>
                 <option value="operational">Operacional</option>
                 <option value="gateway">Gateway (Auto)</option>
               </select>
             </div>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Data</label>
-              <input className="input-dark" type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} style={{ fontSize: 12 }} />
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Data</label>
+              <input className="input-dark" type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} style={{ fontSize: 13 }} />
             </div>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Valor (R$)</label>
-              <input className="input-dark" type="number" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} placeholder="0,00" required style={{ fontSize: 12 }} />
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Valor (R$)</label>
+              <input className="input-dark" type="number" step="0.01" value={form.amount} onChange={(e) => setForm({ ...form, amount: e.target.value })} placeholder="0,00" required style={{ fontSize: 13 }} />
             </div>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Descrição</label>
-              <input className="input-dark" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Descrição..." required style={{ fontSize: 12 }} />
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Descrição</label>
+              <input className="input-dark" value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Descrição..." required style={{ fontSize: 13 }} />
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
               <button type="submit" className="btn-primary" style={{ flex: 1 }}>Salvar</button>
-              <button type="button" className="btn-secondary" onClick={() => setShowForm(false)}>×</button>
+              <button type="button" className="btn-secondary" onClick={() => setShowForm(false)}>Cancelar</button>
             </div>
           </form>
         </div>
@@ -188,38 +189,36 @@ export function Financeiro() {
 
       {/* Gateway Config Panel */}
       {showGatewayConfig && (
-        <div className="glass-card animate-fade-in-up" style={{ padding: 20, background: 'var(--bg-primary)' }}>
-          <h3 style={{ fontSize: 14, fontWeight: 700, marginBottom: 16 }}>Taxas de Gateway (Automáticas)</h3>
-          <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>Estes valores são debitados automaticamente como despesa de "Gateway" quando um lead é marcado como Pago.</p>
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+        <div className="glass-card animate-fade-in-up" style={{ padding: 24, background: 'var(--bg-primary)' }}>
+          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, fontFamily: "'Manrope', sans-serif" }}>Taxas de Gateway (Automáticas)</h3>
+          <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 16 }}>Estes valores são debitados automaticamente como despesa de "Gateway" quando um lead é marcado como Pago.</p>
+          <div style={{ display: 'flex', gap: 20, alignItems: 'flex-end', flexWrap: 'wrap' }}>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Custo Fixo (R$)</label>
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Custo Fixo (R$)</label>
               <input 
                 className="input-dark" 
                 type="number" 
                 step="0.01" 
                 value={gatewaySettings.fixedFee} 
                 onChange={(e) => setGatewaySettings({ ...gatewaySettings, fixedFee: Number(e.target.value) })} 
-                style={{ width: 120, fontSize: 12 }} 
+                style={{ width: 140, fontSize: 13 }} 
               />
             </div>
             <div>
-              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-muted)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Custo Variável (%)</label>
-              <div style={{ position: 'relative', width: 120 }}>
+              <label style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.05em', fontFamily: "'Manrope', sans-serif" }}>Custo Variável (%)</label>
+              <div style={{ position: 'relative', width: 140 }}>
                 <input 
                   className="input-dark" 
                   type="number" 
                   step="0.01" 
                   value={gatewaySettings.percentageFee} 
                   onChange={(e) => setGatewaySettings({ ...gatewaySettings, percentageFee: Number(e.target.value) })} 
-                  style={{ width: '100%', fontSize: 12, paddingRight: 24 }} 
+                  style={{ width: '100%', fontSize: 13, paddingRight: 28 }} 
                 />
-                <span style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', fontSize: 12, color: 'var(--text-muted)' }}>%</span>
+                <span style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', fontSize: 13, color: 'var(--text-muted)', fontWeight: 600 }}>%</span>
               </div>
             </div>
-            <div style={{ marginTop: 22 }}>
-              <button className="btn-secondary" onClick={() => setShowGatewayConfig(false)}>Fechar</button>
-            </div>
+            <button className="btn-secondary" onClick={() => setShowGatewayConfig(false)}>Fechar</button>
           </div>
         </div>
       )}
@@ -246,16 +245,13 @@ export function Financeiro() {
                     <td style={{ whiteSpace: 'nowrap' }}>{exp.date}</td>
                     <td>
                       {op && (
-                        <span className="op-badge" style={{ background: `${op.color}12`, color: op.color, border: `1px solid ${op.color}25` }}>
+                        <span className="op-badge" style={{ background: `${op.color}15`, color: op.color, border: `1px solid ${op.color}30` }}>
                           {op.icon} {op.name}
                         </span>
                       )}
                     </td>
                     <td>
-                      <span className="badge" style={{
-                        background: exp.type === 'meta_ads' ? 'rgba(244,63,94,0.1)' : exp.type === 'operational' ? 'rgba(245,158,11,0.1)' : 'rgba(139,92,246,0.1)',
-                        color: exp.type === 'meta_ads' ? 'var(--accent-rose)' : exp.type === 'operational' ? 'var(--accent-amber)' : 'var(--accent-violet)',
-                      }}>
+                      <span className={`badge ${exp.type === 'meta_ads' ? 'badge-danger' : exp.type === 'operational' ? 'badge-warning' : 'badge-info'}`}>
                         {exp.type === 'meta_ads' ? 'Meta Ads' : exp.type === 'operational' ? 'Operacional' : 'Gateway'}
                       </span>
                     </td>
@@ -264,10 +260,16 @@ export function Financeiro() {
                     <td>
                       <button
                         onClick={() => deleteExpense(exp.id)}
-                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 4 }}
+                        style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', padding: 6, transition: 'all 0.2s ease' }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = 'var(--color-danger)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = 'var(--text-muted)';
+                        }}
                         title="Excluir"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={16} />
                       </button>
                     </td>
                   </tr>
